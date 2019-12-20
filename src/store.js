@@ -131,7 +131,6 @@ const reducerShop = (state = initialState, action) => {
       console.log(action.type + ", esta acción no existe")
       break;
   }
-  console.log(state)
   return state
 }
 

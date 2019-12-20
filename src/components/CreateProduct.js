@@ -5,261 +5,276 @@ import M from "materialize-css/dist/js/materialize"
 import './style/CreateProduct.scss'
 import { connect } from "react-redux"
 
-let size
-let brand
-let stateP
-let imgDest
-let otherImgOne
-let otherImgTwo
+class CreateProduct extends React.Component {
+  constructor(props) {    
+    super(props)
+    this.state = {
+      size: "",
+      stateP: "",
+      brand: "",
+      imgDest: "",
+      otherImgOne: "",
+      otherImgTwo: ""
+    }
+  }
 
-const CreateProduct = ({product, addProduct}) => (  
-  <Row className="createProduct">
-    <Col s={12} l={12}>
-      <form 
-        onSubmit={ e => {
-            e.preventDefault()
-            if(size === undefined || brand === undefined || stateP === undefined || imgDest === undefined ){
-              return M.toast({ html: 'Todos los datos marcados con * son obligatorios' })
-            }else if(product.typePublish === "" || product.typeProduct === "" || product.typeProductItem === ""){
-              return M.toast({ html: 'No haz elegido la categoria' })
-            }else{
-              let newProduct = {
-                gender: product.typePublish,
-                product: product.typeProduct,
-                item: product.typeProductItem,
-                size: size,
-                brand: brand,
-                stateP: stateP,
-                imgDest: imgDest,
-                otherImgOne: otherImgOne? otherImgOne : null,
-                otherImgTwo: otherImgTwo? otherImgTwo : null
-              }
-              addProduct(newProduct)
-            }
-        }}
-        className="formCreateProduct">
-        <Row className="form">
+  componentDidMount(){     
+    console.log(this.props.product)
+  }
 
-          <Col m={12} s={12} l={12}>
-            <div className="options">
-              <div className="titles">
-                CATEGORÍA <span>*</span>
-              </div>
-              <div className="contentSec">
-                <p>{product.typePublish} > {product.typeProduct} > {product.typeProductItem}</p>
-                <Link to="/publish">
-                  Cambiar
-                </Link>
-              </div>
-            </div>
-          </Col>
+  _submitCreateProduct = e => {
+    e.preventDefault()
+    if(this.state.size === "" || this.state.brand === "" || this.state.stateP === "" || this.state.imgDest === "" ){
+      return M.toast({ html: 'Todos los datos marcados con * son obligatorios' })
+    }else if(this.props.product.typePublish === "" || this.props.product.typeProduct === "" || this.props.product.typeProductItem === ""){
+      return M.toast({ html: 'No haz elegido la categoria' })
+    }else{
+      let newProduct = {
+        gender: this.props.product.typePublish,
+        product: this.props.product.typeProduct,
+        item: this.props.product.typeProductItem,
+        size: this.state.size,
+        brand: this.state.brand,
+        stateP: this.state.stateP,
+        imgDest: this.state.imgDest,
+        otherImgOne: this.state.otherImgOne,
+        otherImgTwo: this.state.otherImgTwo
+      }
+      console.log("Correcto", newProduct)
+      this.props.addProduct(newProduct)
+    }
+  }
 
-          <Col m={12} s={6} l={6}>
-            <div className="options">
-              <div className="titles">
-                TALLA <span>*</span>
-              </div>
-              <div className="contentSec">
-                <Select
-                  s={12} l={12}
-                  value={ size }
-                  onChange={ e => {
-                    size = e.target.value
-                  }}>
-                  <option value="" >
-                    - Seleccionar -
-                  </option>
-                  {
-                    product.sizeProduct.map( size => (
-                      <option key={size.id} value={size.name}>
-                        {size.name}
+  render() {
+    return (
+      <Row className="createProduct">
+        <Col s={12} l={12}>
+          <form 
+            onSubmit={ this._submitCreateProduct.bind(this)}
+            className="formCreateProduct">
+            <Row className="form">
+
+              <Col m={12} s={12} l={12}>
+                <div className="options">
+                  <div className="titles">
+                    CATEGORÍA <span>*</span>
+                  </div>
+                  <div className="contentSec">
+                    <p>{this.props.product.typePublish} > {this.props.product.typeProduct} > {this.props.product.typeProductItem}</p>
+                    <Link to="/publish">
+                      Cambiar
+                    </Link>
+                  </div>
+                </div>
+              </Col>
+
+              <Col m={12} s={6} l={6}>
+                <div className="options">
+                  <div className="titles">
+                    TALLA <span>*</span>
+                  </div>
+                  <div className="contentSec">
+                    <Select
+                      s={12} l={12}
+                      value={ this.state.size }
+                      onChange={ e => {
+                        this.setState({size: e.target.value})
+                      }}>
+                      <option value="" >
+                        - Seleccionar -
                       </option>
-                    ))
-                  }
-                </Select>
-              </div>
-            </div>
-          </Col>
+                      {
+                        this.props.product.sizeProduct.map( size => (
+                          <option key={size.id} value={size.name}>
+                            {size.name}
+                          </option>
+                        ))
+                      }
+                    </Select>
+                  </div>
+                </div>
+              </Col>
 
-          <Col m={12} s={6} l={6}>
-            <div className="options">
-              <div className="titles">
-                MARCA <span>*</span>
-              </div>
-              <div className="contentSec">
-                <Select
-                  s={12} l={12}
-                  value={ brand }
-                  onChange={ e => {
-                    brand = e.target.value
-                  }}>
-                  <option value="">
-                    - Seleccionar -
-                  </option>
-                  {
-                    product.brandProduct.map( size => (
-                      <option key={size.id} value={size.name}>
-                        {size.name}
+              <Col m={12} s={6} l={6}>
+                <div className="options">
+                  <div className="titles">
+                    MARCA <span>*</span>
+                  </div>
+                  <div className="contentSec">
+                    <Select
+                      s={12} l={12}
+                      value={ this.state.brand }
+                      onChange={ e => {
+                        this.setState({brand: e.target.value})
+                      }}>
+                      <option value="">
+                        - Seleccionar -
                       </option>
-                    ))
-                  }
-                </Select>
-              </div>
-            </div>
-          </Col>
+                      {
+                        this.props.product.brandProduct.map( size => (
+                          <option key={size.id} value={size.name}>
+                            {size.name}
+                          </option>
+                        ))
+                      }
+                    </Select>
+                  </div>
+                </div>
+              </Col>
 
-          <Col m={12} s={6} l={6}>
-            <div className="options">
-              <div className="titles">
-                ESTADO <span>*</span>
-              </div>
-              <div className="contentSec">
-                <Select
-                  s={12} l={12}
-                  value={ stateP }
-                  onChange={ e => {
-                    stateP = e.target.value
-                  }}>
-                  <option value="">
-                    - Seleccionar -
-                  </option>
-                  {
-                    product.stateProduct.map( size => (
-                      <option key={size.id} value={size.name}>
-                        {size.name}
+              <Col m={12} s={6} l={6}>
+                <div className="options">
+                  <div className="titles">
+                    ESTADO <span>*</span>
+                  </div>
+                  <div className="contentSec">
+                    <Select
+                      s={12} l={12}
+                      value={ this.state.stateP }
+                      onChange={ e => {
+                        this.setState({stateP: e.target.value})
+                      }}>
+                      <option value="">
+                        - Seleccionar -
                       </option>
-                    ))
-                  }
-                </Select>
-              </div>
-            </div>
-          </Col>
+                      {
+                        this.props.product.stateProduct.map( size => (
+                          <option key={size.id} value={size.name}>
+                            {size.name}
+                          </option>
+                        ))
+                      }
+                    </Select>
+                  </div>
+                </div>
+              </Col>
 
-          <Col m={12} s={6} l={6}>
-            <div className="options">
-              <div className="titles">
-                SUBE FOTOS
-              </div>
-              <div className="contentSec">
-                <a
-                  className="modal-trigger"
-                  href="#modalInfoImg">
-                  Mira nuestros tips para subir buenas fotos
-                </a>
-                <TextInput
-                  s={12} l={12}
-                  type="file"
-                  label="Sube tu imagen"
-                  onChange={e => {
-                    console.log("uploadFile")
-                    console.log("e", e)
-                  }}
-                /> 
-              </div>         
-            </div>
-          </Col>
+              <Col m={12} s={6} l={6}>
+                <div className="options">
+                  <div className="titles">
+                    SUBE FOTOS
+                  </div>
+                  <div className="contentSec">
+                    <a
+                      className="modal-trigger"
+                      href="#modalInfoImg">
+                      Mira nuestros tips para subir buenas fotos
+                    </a>
+                    <TextInput
+                      s={12} l={12}
+                      type="file"
+                      label="Sube tu imagen"
+                      onChange={e => {
+                        console.log("e", e)
+                      }}
+                    /> 
+                  </div>         
+                </div>
+              </Col>
 
-          <Col m={12} s={6} l={6}>
-            <div className="options">
-              <div className="titles">
-                IMAGEN DESTACADA <span>*</span>
-              </div>
-              <div className="contentSec">
-                <p className="label">Ingresa URL</p>
-                <TextInput
-                  className="inputText"
-                  s={12} l={12}      
-                  value={imgDest}
-                  onChange={ e => {
-                    imgDest = e.target.value
-                  }}
-                  children={
-                    <Button
-                      className="iconInput"         
-                      node="a"
-                      icon={<Icon>send</Icon>}>
-                    </Button>
-                  } />
-              </div>
-            </div>
-          </Col>
+              <Col m={12} s={6} l={6}>
+                <div className="options">
+                  <div className="titles">
+                    IMAGEN DESTACADA <span>*</span>
+                  </div>
+                  <div className="contentSec">
+                    <p className="label">Ingresa URL</p>
+                    <TextInput
+                      className="inputText"
+                      s={12} l={12}      
+                      value={this.state.imgDest}
+                      onChange={ e => {
+                        this.setState({imgDest: e.target.value})
+                      }}
+                      children={
+                        <Button
+                          className="iconInput"         
+                          node="a"
+                          icon={<Icon>send</Icon>}>
+                        </Button>
+                      } />
+                  </div>
+                </div>
+              </Col>
 
-          <Col m={12} s={6} l={6}>
-            <div className="options">
-              <div className="titles">
-                OTRAS IMAGENES
-              </div>
-              <div className="contentSec">
-                <p className="label">Ingresa URL</p>
-                <TextInput
-                  s={12} l={12}    
-                  className="inputText"  
-                  value={otherImgOne}
-                  onChange={ e => {
-                    otherImgOne = e.target.value
-                  }}
-                  children={
-                    <Button
-                      className="iconInput"         
-                      node="a"
-                      icon={<Icon>send</Icon>}>
-                    </Button>
-                  } />
-                <p className="label">Ingresa URL</p>
-                <TextInput
-                  s={12} l={12}    
-                  className="inputText"  
-                  value={otherImgTwo}
-                  onChange={ e => {
-                    otherImgTwo = e.target.value
-                  }}
-                  children={
-                    <Button
-                      className="iconInput"         
-                      node="a"
-                      icon={<Icon>send</Icon>}>
-                    </Button>
-                  } />
-              </div>
-            </div>
-          </Col>
-          <Col s={12} m={12} l={12}>
-            <Button
-              className="btnSend"       
-              type="submit"
-              waves="light">
-              Publicar
-            </Button>
-          </Col>
-        </Row>  
-      </form>
-      <Modal
-        actions={[
-          <Button flat modal="close" node="button" waves="green">Close</Button>
-        ]}
-        bottomSheet={false}
-        fixedFooter={false}
-        header="Modal Header"
-        id="modalInfoImg"
-        options={{
-          dismissible: true,
-          endingTop: '10%',
-          inDuration: 250,
-          onCloseEnd: null,
-          onCloseStart: null,
-          onOpenEnd: null,
-          onOpenStart: null,
-          opacity: 0.5,
-          outDuration: 250,
-          preventScrolling: true,
-          startingTop: '4%'
-        }}
-      >
-        Lorem ipsum dolor sit amet
-      </Modal>
-    </Col>
-  </Row>
-)
+              <Col m={12} s={6} l={6}>
+                <div className="options">
+                  <div className="titles">
+                    OTRAS IMAGENES
+                  </div>
+                  <div className="contentSec">
+                    <p className="label">Ingresa URL</p>
+                    <TextInput
+                      s={12} l={12}    
+                      className="inputText"  
+                      value={this.state.otherImgOne}
+                      onChange={ e => {
+                        this.setState({otherImgOne: e.target.value})
+                      }}
+                      children={
+                        <Button
+                          className="iconInput"         
+                          node="a"
+                          icon={<Icon>send</Icon>}>
+                        </Button>
+                      } />
+                    <p className="label">Ingresa URL</p>
+                    <TextInput
+                      s={12} l={12}    
+                      className="inputText"  
+                      value={this.state.otherImgTwo}
+                      onChange={ e => {
+                        this.setState({otherImgTwo: e.target.value})
+                      }}
+                      children={
+                        <Button
+                          className="iconInput"         
+                          node="a"
+                          icon={<Icon>send</Icon>}>
+                        </Button>
+                      } />
+                  </div>
+                </div>
+              </Col>
+              <Col s={12} m={12} l={12}>
+                <Button
+                  className="btnSend"       
+                  type="submit"
+                  waves="light">
+                  Publicar
+                </Button>
+              </Col>
+            </Row>  
+          </form>
+          <Modal
+            actions={[
+              <Button flat modal="close" node="button" waves="green">Close</Button>
+            ]}
+            bottomSheet={false}
+            fixedFooter={false}
+            header="Modal Header"
+            id="modalInfoImg"
+            options={{
+              dismissible: true,
+              endingTop: '10%',
+              inDuration: 250,
+              onCloseEnd: null,
+              onCloseStart: null,
+              onOpenEnd: null,
+              onOpenStart: null,
+              opacity: 0.5,
+              outDuration: 250,
+              preventScrolling: true,
+              startingTop: '4%'
+            }}
+          >
+            Lorem ipsum dolor sit amet
+          </Modal>
+        </Col>
+      </Row>
+    )
+  }
+}  
 
 function initInfo(typePublish, typeProductItem){
   if(typePublish === "" ){
