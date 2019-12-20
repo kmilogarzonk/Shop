@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Select, TextInput, Button, Modal, Icon } from 'react-materialize'
-import { Link } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 import M from "materialize-css/dist/js/materialize"
 import './style/CreateProduct.scss'
 import { connect } from "react-redux"
@@ -14,12 +14,12 @@ class CreateProduct extends React.Component {
       brand: "",
       imgDest: "",
       otherImgOne: "",
-      otherImgTwo: ""
+      otherImgTwo: "",
+      redirect: false
     }
   }
 
   componentDidMount(){     
-    console.log(this.props.product)
   }
 
   _submitCreateProduct = e => {
@@ -40,8 +40,14 @@ class CreateProduct extends React.Component {
         otherImgOne: this.state.otherImgOne,
         otherImgTwo: this.state.otherImgTwo
       }
-      console.log("Correcto", newProduct)
-      this.props.addProduct(newProduct)
+      this.setState({redirect: true})
+      this.props.addProduct(newProduct)      
+    }
+  }
+
+  renderRedirect = () => {
+    if (this.state.redirect) {      
+      return <Redirect to='/product' />
     }
   }
 
@@ -49,6 +55,7 @@ class CreateProduct extends React.Component {
     return (
       <Row className="createProduct">
         <Col s={12} l={12}>
+          {this.renderRedirect()}
           <form 
             onSubmit={ this._submitCreateProduct.bind(this)}
             className="formCreateProduct">
@@ -252,7 +259,7 @@ class CreateProduct extends React.Component {
             ]}
             bottomSheet={false}
             fixedFooter={false}
-            header="Modal Header"
+            header="Tu imagen"
             id="modalInfoImg"
             options={{
               dismissible: true,
@@ -268,7 +275,7 @@ class CreateProduct extends React.Component {
               startingTop: '4%'
             }}
           >
-            Lorem ipsum dolor sit amet
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </Modal>
         </Col>
       </Row>

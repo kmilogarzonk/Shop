@@ -122,7 +122,7 @@ const reducerShop = (state = initialState, action) => {
         typeProductItem: action.item
       }
     case "addProduct":
-      console.log(action)
+      action.product["id"] = uuid.v4()
       return {
         ...state,
         products: state.products.concat(action.product)

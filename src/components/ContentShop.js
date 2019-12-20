@@ -4,6 +4,7 @@ import './style/ContentShop.scss';
 import TypeProduct from './TypeProduct'
 import Genders from './Genders'
 import CreateProduct from './CreateProduct'
+import ShowProduct from './ShowProduct'
 import { Switch, Route } from "react-router-dom"
 
 const ContentShop = () => (
@@ -19,6 +20,9 @@ const ContentShop = () => (
         </Route>
         <Route exact path="/createproduct">
           <CreateProduct />
+        </Route>
+        <Route exact path="/product">
+          <ShowProduct />
         </Route>
       </Switch>
     </Col>
