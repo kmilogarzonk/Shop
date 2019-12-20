@@ -1,0 +1,54 @@
+.createProduct{
+  margin: 1rem 0 0;
+  padding: 0;
+  .col{
+    padding: 0;
+    .row.form {
+      margin-left: 0px;
+      margin-right: 0;
+      .options{
+        text-align: left;
+        margin: 5px 0;
+        .titles{
+          background: #eee;
+          color: #000;
+          font-weight: 700;
+          padding: .5rem 1rem;
+          span{
+            color: rgb(230, 18, 18);
+          }
+        }
+        .contentSec{
+          padding: .5rem 2rem;
+          background: #FFF;
+          .input-field{
+            position: relative;            
+          }
+          .iconInput{
+            position: absolute;
+            right: 0;
+            padding: 0 10px;
+            margin: 0;
+            height: auto;
+            background: #909090;
+            color: #FFF;
+          }
+        }
+        a{
+          color: #E12852;
+          text-decoration: underline;
+          &:hover{
+            color: rgb(151, 45, 69);
+          }
+        }
+      }
+      .btnSend{
+        margin: 3rem 0;
+        background: #E12852;
+        font-size: 18px;
+        width: 40%;
+        border-radius: 25px;
+      }
+    }
+  }
+}

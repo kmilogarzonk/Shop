@@ -1,0 +1,26 @@
+.typeProduct{
+  margin: 0;
+  padding: 1rem;
+  .products{
+    margin-top: 1rem;    
+    .image{
+      width: 10rem;
+      height: 10rem;
+      border-radius: 80px;
+    }
+    .collapsible-header {
+      color: #045A9B;
+    }
+    .active .collapsible-body {
+      display: flex;
+      padding: 1rem 2rem;
+      a{
+        color: rgb(219, 49, 49);
+        font-weight: 400;
+        &:hover{
+          color: rgb(92, 39, 39);
+        }
+      }
+    }
+  }  
+}

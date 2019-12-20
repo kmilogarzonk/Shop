@@ -1,17 +1,19 @@
-import React from 'react';
+import React from 'react'
 import { Navbar, Icon, NavItem } from 'react-materialize'
-import './style/NavBar.scss';
+import { Link } from "react-router-dom"
+import './style/NavBar.scss'
 
 function NavBar() {
   return (
     <Navbar
       className="barUser"
       alignLinks="right"
-      brand={<a href="#">
-        <Icon>
-          arrow_back
-        </Icon>
-        </a>}
+      brand={
+        <Link to="/">
+          <Icon>
+            arrow_back
+          </Icon>
+        </Link>}
       >
       <NavItem href="#" >
         <Icon>

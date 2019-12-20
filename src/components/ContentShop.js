@@ -1,37 +1,28 @@
-import React, { useState } from 'react';
-import { Row, Col, Icon} from 'react-materialize'
+import React from "react"
+import { Row, Col} from 'react-materialize'
 import './style/ContentShop.scss';
+import TypeProduct from './TypeProduct'
+import Genders from './Genders'
+import CreateProduct from './CreateProduct'
+import { Switch, Route } from "react-router-dom"
 
+const ContentShop = () => (
+  <Row className="contentShop" >
+    <Col s={12} l={12} className="white z-depth-1 center-align">
+      <h4 className="title">VENDE TUS PRODUCTOS</h4>
+      <Switch>
+        <Route exact path="/">
+          <Genders /> 
+        </Route>
+        <Route exact path="/publish">
+          <TypeProduct />
+        </Route>
+        <Route exact path="/createproduct">
+          <CreateProduct />
+        </Route>
+      </Switch>
+    </Col>
+  </Row>
+)
 
-function ContentShop() {
-
-  const [typePublish, setTypePublish] = useState(0);
-
-  return (
-    <Row className="contentShop">
-      <Col s={12} l={12}>
-        <Row className="content white z-depth-1" >
-          <Col s={12} l={12} className="center-align">
-            <h4 className="title">VENDE TUS PRODUCTOS</h4>
-            <p className="description">
-              ¿Cómo quieres publicar?
-            </p>
-            <div className="sectionShop">
-              <a onClick={e => {
-                e.preventDefault();
-                setTypePublish("Mujer");
-              }}>
-                <img src="images/woman.jpg" />
-              </a>
-              <p className="description">
-                Mujer
-              </p>
-            </div>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
-  );
-}
-
-export default ContentShop;
+export default ContentShop

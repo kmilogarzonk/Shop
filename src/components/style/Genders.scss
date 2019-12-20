@@ -1,0 +1,19 @@
+.contentType{
+    margin: 0;
+    padding: 1rem;
+    .description{
+        color: #909090;
+        font-size: 1.3rem;
+    }
+    .sectionShop{
+        margin: 1rem auto;
+        a{
+            cursor: pointer;
+            img{
+                width: 10rem;
+                height: 10rem;
+                border-radius: 80px;
+            }  
+        } 
+    }
+}
